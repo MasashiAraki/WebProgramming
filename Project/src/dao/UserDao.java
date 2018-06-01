@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.catalina.User;
 
@@ -16,18 +19,18 @@ import org.apache.catalina.User;
 public class UserDao {
 
 	/**
-	 * ログインIDとパスワードに該当するIDと名前を取得
+	 * ログインIDとパスワードに該当するユーザ情報を取得
 	 * @param loginId
 	 * @param password
 	 * @return
 	 */
 	public User findByLoginInfo(String loginId, String password) {
-		Connection con = null;
+		Connection conn = null;
 		try {
 			// DBに接続してSQL文を実行
-			con = DBManager.getConnection();
+			conn = DBManager.getConnection();
 			String sql = "SELECT * FROM user WHERE login_id = ? and password = ?";
-			PreparedStatement pStmt = con.prepareStatement(sql);
+			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, loginId);
 			pStmt.setString(2, password);
 			ResultSet rs = pStmt.executeQuery();
@@ -44,14 +47,37 @@ public class UserDao {
 			e.printStackTrace();
 			return null;
 		} finally {
-			if(con != null) {
+			if(conn != null) {
 				try {
-					con.close();
+					conn.close();
 				} catch (SQLException e) {
 					e.printStackTrace();
 					return null;
 				}
 			}
 		}
+	}
+
+	/**
+	 * 全てのユーザ情報を取得
+	 */
+	public List<User> findAll() {
+		Connection conn = null;
+		List<User> userList = new ArrayList<User>();
+
+		try {
+			conn = DBManager.getConnection();
+			String sql = "SELECT * FROM user";
+
+			Statement stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(sql);
+
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return null;
+
 	}
 }
