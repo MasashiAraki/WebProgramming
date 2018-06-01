@@ -11,13 +11,13 @@ public class DBManager {
 	final private static String PASS = "password";
 
 	public static Connection getConnection() {
-		Connection con = null;
+		Connection conn = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
-			con = DriverManager.getConnection(URL+DB_NAME, USER, PASS);
+			conn = DriverManager.getConnection(URL+DB_NAME, USER, PASS);
 		} catch (SQLException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return con;
+		return conn;
 	}
 }
