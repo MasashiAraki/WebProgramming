@@ -72,12 +72,30 @@ public class UserDao {
 			Statement stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery(sql);
 
-
-		} catch (Exception e) {
-			// TODO: handle exception
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String loginId = rs.getString("login_id");
+				String name = rs.getString("name");
+				String birthDate = rs.getString("birth_date");
+				String password = rs.getString("password");
+				String createDate = rs.getString("create_date");
+				String updateDate = rs.getString("update_date");
+				User user = new User(id, loginId, name, birthDate, password, createDate, updateDate);
+				userList.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
 		}
-
 		return null;
-
 	}
 }
