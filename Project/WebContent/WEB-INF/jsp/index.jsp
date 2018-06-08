@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +11,7 @@
 <body>
 	<div class="container">
 		<p class="h1 mb-5 mt-3 font-weight-bold text-center">ログイン画面</p>
-		<form>
+		<form method="post" action="LoginServlet">
 			<div class="form-group row">
 				<label for="loginId" class="col-sm-2 col-form-label"><b>ログインID</b></label>
 				<div class="col-sm-10">
@@ -24,12 +25,11 @@
 					<input type="password" id="password" class="form-control">
 				</div>
 			</div>
+
+			<div class="text-center">
+			<button type="submit" class="btn btn-primary">ログイン</button>
+			</div>
 		</form>
-
-		<div class="text-center">
-			<button type="button" class="btn btn-primary">ログイン</button>
-		</div>
-
 	</div>
 </body>
 </html>
