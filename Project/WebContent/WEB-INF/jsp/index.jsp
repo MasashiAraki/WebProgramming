@@ -15,14 +15,14 @@
 			<div class="form-group row">
 				<label for="loginId" class="col-sm-2 col-form-label"><b>ログインID</b></label>
 				<div class="col-sm-10">
-					<input type="text" id="loginId" class="form-control">
+					<input type="text" name="loginId" id="loginId" class="form-control">
 				</div>
 			</div>
 
 			<div class="form-group row">
 				<label for="password" class="col-sm-2 col-form-label"><b>パスワード</b></label>
 				<div class="col-sm-10">
-					<input type="password" id="password" class="form-control">
+					<input type="password" name="password" id="password" class="form-control">
 				</div>
 			</div>
 
