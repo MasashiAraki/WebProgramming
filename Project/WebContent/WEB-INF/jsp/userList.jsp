@@ -10,7 +10,7 @@
 <body>
 	<nav class="navbar navbar-dark bg-dark mb-3">
 		<a class="text-white">ユーザ名さん</a>
-		<a href="#" class="text-danger font-weight-bold">ログアウト</a>
+		<a href="LogoutServlet" class="text-danger font-weight-bold">ログアウト</a>
 
 	</nav>
 
