@@ -11,6 +11,7 @@
 <body>
 	<div class="container">
 		<p class="h1 mb-5 mt-3 font-weight-bold text-center">ログイン画面</p>
+		<p class="text-danger font-weight-blod text-center">${errorMessage}</p>
 		<form method="post" action="LoginServlet">
 			<div class="form-group row">
 				<label for="loginId" class="col-sm-2 col-form-label"><b>ログインID</b></label>
