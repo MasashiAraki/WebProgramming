@@ -14,13 +14,13 @@ public class User {
 	private String createDate;
 	private String updateDate;
 
-//	ログインセッションを保存
+	// ログインセッションを保存
 	public User (String loginid, String name) {
 		this.loginId = loginid;
 		this.name = name;
 	}
 
-//	全てのユーザ情報を保存
+	// 全てのユーザ情報を保存
 	public User (int id, String loginId, String name, String birthDate, String password, String createDate, String updateDate) {
 		this.id = id;
 		this.loginId = loginId;
