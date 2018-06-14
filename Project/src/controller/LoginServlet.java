@@ -61,7 +61,7 @@ public class LoginServlet extends HttpServlet {
 		UserDao userDao = new UserDao();
 		User user = userDao.findByLoginInfo(loginId, password);
 
-		  // テーブルに該当のデータが見つからなかった場合
+		// テーブルに該当のデータが見つからなかった場合
 		if (user == null) {
 			request.setAttribute("errorMessage", "ログインIDまたはパスワードが異なります");
 			// ログインjspにフォワード
