@@ -32,15 +32,25 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// フォワード
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
-		dispatcher.forward(request, response);
+
+
+		// ログインセッションがある場合はユーザ一覧へ。ない場合はログイン画面へ。
+		String alreadyLogin = (String)request.getAttribute("user");
+		if (alreadyLogin == null) {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userList.jsp");
+			dispatcher.forward(request, response);
+		} else {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
+			dispatcher.forward(request, response);
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+
 		// 文字コード指定
 		request.setCharacterEncoding("UTF-8");
 		// リクエストパラメータを取得
@@ -51,10 +61,7 @@ public class LoginServlet extends HttpServlet {
 		UserDao userDao = new UserDao();
 		User user = userDao.findByLoginInfo(loginId, password);
 
-
-		/**
-		 * テーブルに該当のデータが見つからなかった場合
-		 */
+		  // テーブルに該当のデータが見つからなかった場合
 		if (user == null) {
 			request.setAttribute("errorMessage", "ログインIDまたはパスワードが異なります");
 			// ログインjspにフォワード
@@ -63,9 +70,7 @@ public class LoginServlet extends HttpServlet {
 			return;
 		}
 
-		/**
-		 * テーブルに該当のデータが見つかった場合
-		 */
+		// テーブルに該当のデータが見つかった場合
 		HttpSession session = request.getSession();
 		session.setAttribute("userInfo", user);
 
