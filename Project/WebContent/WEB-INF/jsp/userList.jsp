@@ -9,7 +9,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-dark bg-dark mb-3">
-		<a class="text-white">ユーザ名さん</a>
+		<a class="text-white">${userInfo.name}さん</a>
 		<a href="LogoutServlet" class="text-danger font-weight-bold">ログアウト</a>
 
 	</nav>
