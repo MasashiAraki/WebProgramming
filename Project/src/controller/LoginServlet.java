@@ -35,8 +35,8 @@ public class LoginServlet extends HttpServlet {
 
 
 		// ログインセッションがある場合はユーザ一覧へ。ない場合はログイン画面へ。
-		String alreadyLogin = (String)request.getAttribute("user");
-		if (alreadyLogin == null) {
+		Object LoginCheck = request.getAttribute("user");
+		if (LoginCheck != null) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userList.jsp");
 			dispatcher.forward(request, response);
 		} else {
@@ -64,7 +64,6 @@ public class LoginServlet extends HttpServlet {
 		// テーブルに該当のデータが見つからなかった場合
 		if (user == null) {
 			request.setAttribute("errorMessage", "ログインIDまたはパスワードが異なります");
-			// ログインjspにフォワード
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
 			dispatcher.forward(request, response);
 			return;
