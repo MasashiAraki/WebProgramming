@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.UserDao;
 import model.User;
@@ -33,12 +34,19 @@ public class UserListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		UserDao userDao = new UserDao();
-		List<User> userList = userDao.findAll();
+		// ログインセッションのユーザ情報の有無によって分岐
+		HttpSession session = request.getSession();
+		Object LoginCheck = session.getAttribute("userInfo");
+		if (LoginCheck == null) {
+			response.sendRedirect("LoginServlet");
+		} else {
+			UserDao userDao = new UserDao();
+			List<User> userList = userDao.findAll();
+			request.setAttribute("userList", userList);
 
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userList.jsp");
-		dispatcher.forward(request, response);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userList.jsp");
+			dispatcher.forward(request, response);
+		}
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

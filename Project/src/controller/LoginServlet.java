@@ -33,15 +33,14 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-
-		// ログインセッションがある場合はユーザ一覧へ。ない場合はログイン画面へ。
-		Object LoginCheck = request.getAttribute("user");
-		if (LoginCheck != null) {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userList.jsp");
-			dispatcher.forward(request, response);
-		} else {
+		// ログインセッションのユーザ情報の有無によって分岐
+		HttpSession session = request.getSession();
+		Object LoginCheck = session.getAttribute("userInfo");
+		if (LoginCheck == null) {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
 			dispatcher.forward(request, response);
+		} else {
+			response.sendRedirect("UserListServlet");
 		}
 	}
 
