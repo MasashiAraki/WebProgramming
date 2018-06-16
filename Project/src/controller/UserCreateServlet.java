@@ -14,13 +14,13 @@ import javax.servlet.http.HttpSession;
  * Servlet implementation class UserCreate
  */
 @WebServlet("/UserCreate")
-public class UserCreate extends HttpServlet {
+public class UserCreateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserCreate() {
+    public UserCreateServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
