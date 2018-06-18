@@ -96,6 +96,6 @@ public class UserDao {
 				}
 			}
 		}
-		return null;
+		return userList;
 	}
 }
