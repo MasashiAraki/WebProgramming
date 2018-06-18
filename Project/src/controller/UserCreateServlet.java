@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class UserCreate
+ * Servlet implementation class UserCreateServlet
  */
-@WebServlet("/UserCreate")
+@WebServlet("/UserCreateServlet")
 public class UserCreateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -28,25 +28,35 @@ public class UserCreateServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// ログインセッションのユーザ情報の有無によって分岐
-		HttpSession session = request.getSession();
-		Object LoginCheck = session.getAttribute("userInfo");
-		if (LoginCheck == null) {
-			response.sendRedirect("LoginServlet");
-		} else {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userCreate.jsp");
-			dispatcher.forward(request, response);
-		}
-	}
+    	// ログインセッションがない場合、ログイン画面にリダイレクト
+    	HttpSession session = request.getSession();
+    	if (session.getAttribute("userInfo") == null) {
+    		response.sendRedirect("LoginServlet");
+    		return;
+    	}
+
+    	RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userCreate.jsp");
+		dispatcher.forward(request, response);
+    }
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		// 文字コード指定。日本語パラメータに対応するため。
+		request.setCharacterEncoding("UTF-8");
+
+		// 入力されたリクエストパラメータを取得
+		String loginId = request.getParameter("loginId");
+		String password = request.getParameter("password");
+		String passwordConfirm = request.getParameter("passwordConfirm");
+		String userName = request.getParameter("userName");
+		String birthdate = request.getParameter("birthdate");
+
+
+
 	}
 
 }
