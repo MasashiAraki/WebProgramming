@@ -34,19 +34,23 @@ public class UserListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		// ログインセッションのユーザ情報の有無によって分岐
+		// ログインセッションがない場合、ログイン画面にリダイレクト
 		HttpSession session = request.getSession();
-		Object LoginCheck = session.getAttribute("userInfo");
-		if (LoginCheck == null) {
+		if (session.getAttribute("userInfo") == null) {
 			response.sendRedirect("LoginServlet");
-		} else {
-			UserDao userDao = new UserDao();
-			List<User> userList = userDao.findAll();
-			request.setAttribute("userList", userList);
-
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userList.jsp");
-			dispatcher.forward(request, response);
+			// リダイレクトで処理を終わらせるためにreturnが必要
+			return;
 		}
+
+		// 全てユーザ情報を取得
+		UserDao userDao = new UserDao();
+		List<User> userList = userDao.findAll();
+
+		// リクエストスコープにセット
+		request.setAttribute("userList", userList);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userList.jsp");
+		dispatcher.forward(request, response);
 	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
