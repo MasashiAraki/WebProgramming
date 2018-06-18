@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +20,9 @@
 		<p class="h1 mb-5 font-weight-bold text-center">ユーザ一覧</p>
 
 		<div class="text-right">
-			<p><button type="button" class="btn btn-outline-primary">新規登録</button></p>
+			<form method="get" action="UserCreateServlet">
+				<p><button type="submit" class="btn btn-outline-primary">新規登録</button></p>
+			</form>
 		</div>
 
 		<form>
@@ -65,6 +69,7 @@
 		<hr>
 
 		<table class="table table-striped ">
+
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col">ログインID</th>
@@ -73,40 +78,24 @@
 					<th scope="col"></th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr>
-					<th scope="row" class="align-middle">id0001</th>
-					<td class="align-middle">田中太郎</td>
-					<td class="align-middle">1989年04月26日</td>
-					<td>
-						<button type="button" class="btn btn-primary">検索</button>
-						<button type="button" class="btn btn-success">更新</button>
-						<button type="button" class="btn btn-danger">削除</button>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row" class="align-middle">id0002</th>
-					<td class="align-middle">佐藤二郎</td>
-					<td class="align-middle">2001年11月12日</td>
-					<td>
-						<button type="button" class="btn btn-primary">検索</button>
-						<button type="button" class="btn btn-success">更新</button>
-						<button type="button" class="btn btn-danger">削除</button>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row" class="align-middle">id0003</th>
-					<td class="align-middle">佐川真司</td>
-					<td class="align-middle">2000年01月01日</td>
-					<td>
-						<button type="button" class="btn btn-primary">検索</button>
-						<button type="button" class="btn btn-success">更新</button>
-						<button type="button" class="btn btn-danger">削除</button>
-					</td>
-				</tr>
-			</tbody>
-		</table>
 
+			<tbody>
+				<c:forEach var="user" items="${userList}">
+					<tr>
+						<td>${user.loginId}</td>
+						<td>${user.name}</td>
+                     	<td>${user.birthDate}</td>
+
+						<td>
+							<button type="button" class="btn btn-primary">詳細</button>
+							<button type="button" class="btn btn-success">更新</button>
+							<button type="button" class="btn btn-danger">削除</button>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
+
+		</table>
 	</div>
 </body>
 </html>
