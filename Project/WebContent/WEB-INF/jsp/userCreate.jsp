@@ -23,7 +23,7 @@
 				<label for="loginId"
 					class="col-sm-2 col-form-label font-weight-bold">ログインID</label>
 				<div class="col-sm-10">
-					<input type="text" name="loginId" id="loginId" class="form-control">
+					<input type="text" name="loginId" id="loginId" value="${inputParameter.loginId}" class="form-control">
 				</div>
 			</div>
 
@@ -47,7 +47,7 @@
 				<label for="userName"
 					class="col-sm-2 col-form-label font-weight-bold">ユーザ名</label>
 				<div class="col-sm-10">
-					<input type="text" name="userName" id="userName" class="form-control">
+					<input type="text" name="userName" id="userName" value="${inputParameter.userName}" class="form-control">
 				</div>
 			</div>
 
@@ -55,7 +55,7 @@
 				<label for="birthdate"
 					class="col-sm-2 col-form-label font-weight-bold">生年月日</label>
 				<div class="col-sm-10">
-					<input type="date" id="birthdate" class="form-control">
+					<input type="date" name="birthdate" id="birthdate"  value="${inputParameter.birthdate}" class="form-control">
 				</div>
 			</div>
 
