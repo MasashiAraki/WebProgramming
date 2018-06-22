@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,8 +10,8 @@
 </head>
 <body>
 	<nav class="navbar navbar-dark bg-dark mb-3">
-		<a class="text-white">ユーザ名さん</a>
-		<a href="#" class="text-danger font-weight-bold">ログアウト</a>
+		<a class="text-white">${userInfo.name}さん</a>
+		<a href="LogoutServlet" class="text-danger font-weight-bold">ログアウト</a>
 
 	</nav>
 
@@ -22,7 +23,7 @@
 				<label for="loginId"
 					class="col-sm-2 col-form-label font-weight-bold">ログインID</label>
 				<div class="col-sm-10">
-					<p class="form-control-plaintext">id0001</p>
+					<p class="form-control-plaintext">${userInfoMap.loginId }</p>
 				</div>
 			</div>
 
@@ -30,7 +31,7 @@
 				<label for="userName"
 					class="col-sm-2 col-form-label font-weight-bold">ユーザ名</label>
 				<div class="col-sm-10">
-					<p class="form-control-plaintext">田中太郎</p>
+					<p class="form-control-plaintext">${userInfoMap.name }</p>
 				</div>
 			</div>
 
@@ -38,7 +39,7 @@
 				<label for="birthdate"
 					class="col-sm-2 col-form-label font-weight-bold">生年月日</label>
 				<div class="col-sm-10">
-					<p class="form-control-plaintext">1989年04月26日</p>
+					<p class="form-control-plaintext">${userInfoMap.birthDate }</p>
 				</div>
 			</div>
 
@@ -46,7 +47,7 @@
 				<label for="createDate"
 					class="col-sm-2 col-form-label font-weight-bold">登録日時</label>
 				<div class="col-sm-10">
-					<p class="form-control-plaintext">2017年01月01日 10:50</p>
+					<p class="form-control-plaintext">${userInfoMap.createDate }</p>
 				</div>
 			</div>
 
@@ -54,13 +55,13 @@
 				<label for="updateDate"
 					class="col-sm-2 col-form-label font-weight-bold">更新日時</label>
 				<div class="col-sm-10">
-					<p class="form-control-plaintext">2017年02月01日 01:05</p>
+					<p class="form-control-plaintext">${userInfoMap.updateDate }</p>
 				</div>
 			</div>
 		</form>
 
 		<div class="text-center">
-			<button type="button" class="btn btn-default">戻る</button>
+			<a class="btn btn-outline-dark" href="UserListServlet" role="button">戻る</a>
 		</div>
 
 	</div>
