@@ -35,6 +35,7 @@ public class UserDao {
 			pStmt.setString(2, password);
 			ResultSet rs = pStmt.executeQuery();
 
+			// 検索結果は1件あるかないかなので、while文ではなくif文を使っている。
 			if (!rs.next()) {
 				return null;
 			}
@@ -97,5 +98,38 @@ public class UserDao {
 			}
 		}
 		return userList;
+	}
+
+	// ログインIDの取得
+	public User findByLoginId(String loginId) {
+		Connection conn = null;
+		try {
+			// DBに接続してSQL文を実行
+			conn = DBManager.getConnection();
+			String sql = "SELECT login_id = ? FROM user";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, loginId);
+			ResultSet rs = pStmt.executeQuery();
+
+			if (!rs.next()) {
+				return null;
+			}
+			// フィールドを取得
+			String loginIdData = rs.getString("login_id");
+			return new User(loginIdData);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
 	}
 }
