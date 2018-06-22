@@ -15,8 +15,8 @@ public class User {
 	private String updateDate;
 
 	// ログインセッションを保存
-	public User (String loginid, String name) {
-		this.loginId = loginid;
+	public User (String loginId, String name) {
+		this.loginId = loginId;
 		this.name = name;
 	}
 
@@ -29,6 +29,11 @@ public class User {
 		this.password = password;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
+	}
+
+	// ログインID比較用
+	public User (String loginId) {
+		this.loginId = loginId;
 	}
 
 	public int getId() {
