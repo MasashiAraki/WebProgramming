@@ -58,17 +58,17 @@ public class UserCreateServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String passwordConfirm = request.getParameter("passwordConfirm");
 		String userName = request.getParameter("userName");
-		String birthdate = request.getParameter("birthdate");
+		String birthDate = request.getParameter("birthDate");
 
 		// 登録エラー時に使う
 		Map<String, String> inputParameterMap = new HashMap<>();
 		inputParameterMap.put("loginId", loginId);
 		inputParameterMap.put("userName", userName);
-		inputParameterMap.put("birthdate", birthdate);
+		inputParameterMap.put("birthDate", birthDate);
 
 		// 入力項目に未入力がある場合
 		if (loginId.equals("") || password.equals("") ||
-				passwordConfirm.equals("") || userName.equals("") || birthdate.equals("")) {
+				passwordConfirm.equals("") || userName.equals("") || birthDate.equals("")) {
 			request.setAttribute("errorMessage", "全て入力してください");
 			errorAction(request, response, inputParameterMap);
 			return;

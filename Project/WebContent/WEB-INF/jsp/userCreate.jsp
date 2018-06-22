@@ -52,10 +52,10 @@
 			</div>
 
 			<div class="form-group row">
-				<label for="birthdate"
+				<label for="birthDate"
 					class="col-sm-2 col-form-label font-weight-bold">生年月日</label>
 				<div class="col-sm-10">
-					<input type="date" name="birthdate" id="birthdate"  value="${inputParameter.birthdate}" class="form-control">
+					<input type="date" name="birthDate" id="birthdate"  value="${inputParameter.birthdate}" class="form-control">
 				</div>
 			</div>
 
