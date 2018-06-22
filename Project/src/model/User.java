@@ -36,6 +36,15 @@ public class User {
 		this.loginId = loginId;
 	}
 
+	// ユーザ情報詳細参照でのユーザ情報保存用
+	public User (String loginId, String name, String birthDate, String createDate, String updateDate) {
+		this.loginId = loginId;
+		this.name = name;
+		this.birthDate = birthDate;
+		this.createDate = createDate;
+		this.updateDate = updateDate;
+	}
+
 	public int getId() {
 		return id;
 	}
