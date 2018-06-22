@@ -36,8 +36,8 @@ public class User {
 		this.loginId = loginId;
 	}
 
-	// ユーザ情報詳細参照でのユーザ情報保存用
-	public User (String loginId, String name, String birthDate, String createDate, String updateDate) {
+	// 指定したidのユーザ情報の1行レコードを保存
+	public User (String loginId, String name, String birthDate, String password, String createDate, String updateDate) {
 		this.loginId = loginId;
 		this.name = name;
 		this.birthDate = birthDate;
