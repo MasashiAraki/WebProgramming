@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
@@ -61,11 +60,6 @@ public class UserCreateServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String birthdate = request.getParameter("birthdate");
 
-		// ログインID比較用
-		UserDao userDao = new UserDao();
-		List<User> userList = userDao.findAll();
-		request.setAttribute("userList", userList);
-
 
 		// 登録エラー時に使う
 		Map<String, String> inputParameterMap = new HashMap<>();
@@ -74,15 +68,18 @@ public class UserCreateServlet extends HttpServlet {
 		inputParameterMap.put("birthdate", birthdate);
 
 
-
 		// すでにログインIDが存在した場合
-		if (request.getAttribute("userList").equals(loginId)) {
+		UserDao userDao = new UserDao();
+		User user = userDao.findByLoginId(loginId);
+		if (user == null) {
+			request.setAttribute("errorMessage", "既にログインIDが存在します");
 			errorAction(request, response, inputParameterMap);
 			return;
 		}
 
 		// パスワードとパスワード確認の入力内容が異なる場合
 		if (password.equals(passwordConfirm)) {
+			request.setAttribute("errorMessage", "パスワードが異なります");
 			errorAction(request, response, inputParameterMap);
 			return;
 		}
@@ -90,13 +87,11 @@ public class UserCreateServlet extends HttpServlet {
 		// 入力項目に未入力がある場合
 		if (!loginId.equals("") || !password.equals("") ||
 				!passwordConfirm.equals("") || !userName.equals("") || !birthdate.equals("")) {
+			request.setAttribute("errorMessage", "全て入力してください");
 			errorAction(request, response, inputParameterMap);
 			return;
 		}
-		
-		
 	}
-
 
 	/**
 	 * エラーが発生した際の処理
@@ -109,7 +104,6 @@ public class UserCreateServlet extends HttpServlet {
 	private void errorAction(HttpServletRequest request, HttpServletResponse response,
 			Map<String, String> inputParameterMap) throws ServletException, IOException {
 		request.setAttribute("inputParameter", inputParameterMap);
-		request.setAttribute("errorMessage", "入力された内容は正しくありません");
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userCreate.jsp");
 		dispatcher.forward(request, response);
 	}
