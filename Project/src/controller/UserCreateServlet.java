@@ -60,34 +60,32 @@ public class UserCreateServlet extends HttpServlet {
 		String userName = request.getParameter("userName");
 		String birthdate = request.getParameter("birthdate");
 
-
 		// 登録エラー時に使う
 		Map<String, String> inputParameterMap = new HashMap<>();
 		inputParameterMap.put("loginId", loginId);
 		inputParameterMap.put("userName", userName);
 		inputParameterMap.put("birthdate", birthdate);
 
+		// 入力項目に未入力がある場合
+		if (loginId.equals("") || password.equals("") ||
+				passwordConfirm.equals("") || userName.equals("") || birthdate.equals("")) {
+			request.setAttribute("errorMessage", "全て入力してください");
+			errorAction(request, response, inputParameterMap);
+			return;
+		}
+
+		// パスワードとパスワード確認の入力内容が異なる場合
+		if (!password.equals(passwordConfirm)) {
+			request.setAttribute("errorMessage", "パスワードが異なります");
+			errorAction(request, response, inputParameterMap);
+			return;
+		}
 
 		// すでにログインIDが存在した場合
 		UserDao userDao = new UserDao();
 		User user = userDao.findByLoginId(loginId);
 		if (user == null) {
 			request.setAttribute("errorMessage", "既にログインIDが存在します");
-			errorAction(request, response, inputParameterMap);
-			return;
-		}
-
-		// パスワードとパスワード確認の入力内容が異なる場合
-		if (password.equals(passwordConfirm)) {
-			request.setAttribute("errorMessage", "パスワードが異なります");
-			errorAction(request, response, inputParameterMap);
-			return;
-		}
-
-		// 入力項目に未入力がある場合
-		if (!loginId.equals("") || !password.equals("") ||
-				!passwordConfirm.equals("") || !userName.equals("") || !birthdate.equals("")) {
-			request.setAttribute("errorMessage", "全て入力してください");
 			errorAction(request, response, inputParameterMap);
 			return;
 		}
