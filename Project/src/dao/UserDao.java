@@ -132,4 +132,41 @@ public class UserDao {
 			}
 		}
 	}
+
+	// ユーザ情報詳細参照に表示するユーザ情報を取得
+	public User findByUserInfo(String id) {
+		Connection conn = null;
+		try {
+			// DBに接続してSQL文を実行
+			conn = DBManager.getConnection();
+			String sql = "SELECT login_id, name, birth_date, create_date, update_date FROM user WHERE id = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, id);
+			ResultSet rs = pStmt.executeQuery();
+
+
+			if (rs.next()) {
+				String loginId = rs.getString("login_id");
+				String name = rs.getString("name");
+				String birthDate = rs.getString("birth_date");
+				String createDate = rs.getString("create_date");
+				String updateDate = rs.getString("update_date");
+				return new User(loginId, name, birthDate, createDate, updateDate);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return null;
+	}
 }
