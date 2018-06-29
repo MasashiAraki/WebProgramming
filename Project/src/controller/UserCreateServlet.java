@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -84,12 +85,23 @@ public class UserCreateServlet extends HttpServlet {
 		// すでにログインIDが存在した場合
 		UserDao userDao = new UserDao();
 		User user = userDao.findByLoginId(loginId);
-		if (user == null) {
+		if (user != null) {
 			request.setAttribute("errorMessage", "既にログインIDが存在します");
 			errorAction(request, response, inputParameterMap);
 			return;
 		}
+
+		// 新規登録処理
+		try {
+			userDao.InsertUserInfo(loginId, userName, birthDate, password);
+			response.sendRedirect("UserListServlet");
+		} catch (NoSuchAlgorithmException e) {
+			// TODO 自動生成された catch ブロック
+			e.printStackTrace();
+		}
+
 	}
+
 
 	/**
 	 * エラーが発生した際の処理
