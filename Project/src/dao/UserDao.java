@@ -1,5 +1,9 @@
 package dao;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.DatatypeConverter;
 
 import model.User;
 
@@ -106,7 +112,7 @@ public class UserDao {
 		try {
 			// DBに接続してSQL文を実行
 			conn = DBManager.getConnection();
-			String sql = "SELECT login_id = ? FROM user";
+			String sql = "SELECT login_id from user where login_id = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, loginId);
 			ResultSet rs = pStmt.executeQuery();
@@ -140,7 +146,7 @@ public class UserDao {
 		try {
 			// DBに接続してSQL文を実行
 			conn = DBManager.getConnection();
-			String sql = "SELECT * FROM user WHERE id = ?";
+			String sql = "SELECT * FROM user WHERE login_id = '?'";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, id);
 			ResultSet rs = pStmt.executeQuery();
@@ -170,5 +176,43 @@ public class UserDao {
 			}
 		}
 		return null;
+	}
+
+	// ユーザ新規登録
+	public void InsertUserInfo(String loginId, String userName, String birthDate, String password) throws NoSuchAlgorithmException {
+
+		// パスワード暗号化
+		String source = "password";
+		Charset charset = StandardCharsets.UTF_8;
+		String algorithm = "MD5";
+
+		byte[] bytes = MessageDigest.getInstance(algorithm).digest(source.getBytes(charset));
+		String result = DatatypeConverter.printHexBinary(bytes);
+
+
+		// SQL実行
+		Connection conn = null;
+		try {
+			conn = DBManager.getConnection();
+			String sql = "INSERT INTO user(login_id, name, birth_date, password, create_date, update_date) VALUES(?, ?, ?, ?, now(), now());";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, loginId);
+			pStmt.setString(2, userName);
+			pStmt.setString(3, birthDate);
+			pStmt.setString(4, result);
+
+			pStmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 }
