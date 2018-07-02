@@ -61,7 +61,7 @@
 		</form>
 
 		<div class="text-center">
-			<a class="btn btn-outline-dark" href="UserListServlet" role="button">戻る</a>
+			<a class="btn btn-secondary" href="UserListServlet" role="button">戻る</a>
 		</div>
 
 	</div>

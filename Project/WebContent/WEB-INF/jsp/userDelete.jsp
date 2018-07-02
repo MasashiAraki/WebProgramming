@@ -28,7 +28,7 @@
 			<input type="hidden" name="id" value="${user.loginId }">
 			<div class="text-center">
 				<button type="submit" class="btn btn-primary">削除</button>
-				<a class="btn btn-outline-dark" href="UserListServlet" role="button">戻る</a>
+				<a class="btn btn-secondary" href="UserListServlet" role="button">戻る</a>
 			</div>
 		</form>
 

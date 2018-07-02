@@ -61,7 +61,7 @@
 
 		<div class="text-center">
 			<button type="submit" class="btn btn-primary">登録</button>
-			<a class="btn btn-outline-dark" href="UserListServlet" role="button">戻る</a>
+			<a class="btn btn-secondary" href="UserListServlet" role="button">戻る</a>
 		</div>
 
 		</form>
