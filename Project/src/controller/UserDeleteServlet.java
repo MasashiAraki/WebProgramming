@@ -39,10 +39,10 @@ public class UserDeleteServlet extends HttpServlet {
     	}
 
     	request.setCharacterEncoding("UTF-8");
-    	String id = request.getParameter("id");
+    	String loginId = request.getParameter("loginId");
 
     	UserDao userDao = new UserDao();
-		User user = userDao.findByUserInfo(id);
+		User user = userDao.findByUserInfo(loginId);
     	request.setAttribute("user", user);
 
     	RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userDelete.jsp");
@@ -54,10 +54,10 @@ public class UserDeleteServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		String id = request.getParameter("id");
+		String loginId = request.getParameter("loginId");
 
 		UserDao userDao = new UserDao();
-		userDao.DeleteUserInfo(id);
+		userDao.DeleteUserInfo(loginId);
 
 		response.sendRedirect("UserListServlet");
 	}
