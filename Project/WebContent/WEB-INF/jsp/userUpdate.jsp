@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,20 +10,21 @@
 </head>
 <body>
 	<nav class="navbar navbar-dark bg-dark mb-3">
-		<a class="text-white">ユーザ名さん</a>
-		<a href="#" class="text-danger font-weight-bold">ログアウト</a>
+		<a class="text-white">${userInfo.name }さん</a>
+		<a href="LogoutServlet" class="text-danger font-weight-bold">ログアウト</a>
 
 	</nav>
 
 	<div class="container">
 		<p class="h1 mb-5 font-weight-bold text-center">ユーザ情報更新</p>
+		<p class="text-danger font-weight-blod text-center">${errorMessage}</p>
 
-		<form>
+		<form method="post" action="UserUpdateServlet">
 			<div class="form-group row">
 				<label for="loginId"
 					class="col-sm-2 col-form-label font-weight-bold">ログインID</label>
 				<div class="col-sm-10">
-					<p class="form-control-plaintext">id0001</p>
+					<p class="form-control-plaintext">${userInfoMap.loginId }</p>
 				</div>
 			</div>
 
@@ -30,7 +32,7 @@
 				<label for="password"
 					class="col-sm-2 col-form-label font-weight-bold">パスワード</label>
 				<div class="col-sm-10">
-					<input type="password" id="password" class="form-control">
+					<input type="password" name="password" id="password" class="form-control">
 				</div>
 			</div>
 
@@ -38,7 +40,7 @@
 				<label for="passwordConfirm"
 					class="col-sm-2 col-form-label font-weight-bold">パスワード(確認)</label>
 				<div class="col-sm-10">
-					<input type="password" id="passwordConfirm" class="form-control">
+					<input type="password" name="passwordConfirm" class="form-control">
 				</div>
 			</div>
 
@@ -46,7 +48,7 @@
 				<label for="userName"
 					class="col-sm-2 col-form-label font-weight-bold">ユーザ名</label>
 				<div class="col-sm-10">
-					<input type="text" id="userName" value="田中太郎" class="form-control">
+					<input type="text" name="userName" value="${userInfoMap.userName }" class="form-control">
 				</div>
 			</div>
 
@@ -54,16 +56,18 @@
 				<label for="birthdate"
 					class="col-sm-2 col-form-label font-weight-bold">生年月日</label>
 				<div class="col-sm-10">
-					<input type="text" id="birthdate" value="1989/04/26"
+					<input type="date" name="birthDate" value="${userInfoMap.birthDate }"
 						class="form-control">
 				</div>
 			</div>
-		</form>
+
 
 		<div class="text-center">
-			<button type="button" class="btn btn-primary">更新</button>
-			<button type="button" class="btn btn-default">戻る</button>
+				<input type="hidden" name="loginId" value="${userInfoMap.loginId }">
+				<button type="submit" class="btn btn-primary">更新</button>
+			<a class="btn btn-secondary" href="UserListServlet" role="button">戻る</a>
 		</div>
+		</form>
 
 	</div>
 </body>
