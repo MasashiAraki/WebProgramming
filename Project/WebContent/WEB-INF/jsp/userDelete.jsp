@@ -25,7 +25,7 @@
 		</div>
 
 		<form method="post" action="UserDeleteServlet">
-			<input type="hidden" name="id" value="${user.loginId }">
+			<input type="hidden" name="loginId" value="${user.loginId }">
 			<div class="text-center">
 				<button type="submit" class="btn btn-primary">削除</button>
 				<a class="btn btn-secondary" href="UserListServlet" role="button">戻る</a>
