@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,8 +10,8 @@
 </head>
 <body>
 	<nav class="navbar navbar-dark bg-dark mb-3">
-		<a class="text-white">ユーザ名さん</a>
-		<a href="#" class="text-danger font-weight-bold">ログアウト</a>
+		<a class="text-white">${userInfo.name}さん</a>
+		<a href="LogoutServlet" class="text-danger font-weight-bold">ログアウト</a>
 
 	</nav>
 
@@ -18,15 +19,18 @@
 		<p class="h1 mb-5 font-weight-bold text-center">ユーザ削除確認</p>
 
 		<div class="text-center">
-			<p>ログインID：id0001</p>
+			<p>ログインID：${user.loginId}</p>
 			<p>を本当に削除してよろしいでしょうか。</p>
 
 		</div>
 
-		<div class="text-center">
-			<button type="button" class="btn btn-danger">削除</button>
-			<button type="button" class="btn btn-default">戻る</button>
-		</div>
+		<form method="post" action="UserDeleteServlet">
+			<input type="hidden" name="id" value="${user.loginId }">
+			<div class="text-center">
+				<button type="submit" class="btn btn-primary">削除</button>
+				<a class="btn btn-outline-dark" href="UserListServlet" role="button">戻る</a>
+			</div>
+		</form>
 
 	</div>
 </body>
