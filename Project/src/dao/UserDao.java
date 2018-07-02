@@ -146,7 +146,7 @@ public class UserDao {
 		try {
 			// DBに接続してSQL文を実行
 			conn = DBManager.getConnection();
-			String sql = "SELECT * FROM user WHERE login_id = '?'";
+			String sql = "SELECT * FROM user WHERE id = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, id);
 			ResultSet rs = pStmt.executeQuery();
@@ -201,6 +201,31 @@ public class UserDao {
 			pStmt.setString(3, birthDate);
 			pStmt.setString(4, result);
 
+			pStmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	// レコードの削除
+	public void DeleteUserInfo(String id) {
+
+		// SQL実行
+		Connection conn = null;
+		try {
+			conn = DBManager.getConnection();
+			String sql = "DELETE FROM user WHERE login_id = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, id);
 			pStmt.executeUpdate();
 
 		} catch (SQLException e) {
