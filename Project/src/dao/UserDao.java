@@ -187,7 +187,7 @@ public class UserDao {
 		String algorithm = "MD5";
 
 		byte[] bytes = MessageDigest.getInstance(algorithm).digest(source.getBytes(charset));
-		String result = DatatypeConverter.printHexBinary(bytes);
+		String encryptedPassword = DatatypeConverter.printHexBinary(bytes);
 
 
 		// SQL実行
@@ -199,7 +199,7 @@ public class UserDao {
 			pStmt.setString(1, loginId);
 			pStmt.setString(2, userName);
 			pStmt.setString(3, birthDate);
-			pStmt.setString(4, result);
+			pStmt.setString(4, encryptedPassword);
 
 			pStmt.executeUpdate();
 
@@ -217,7 +217,7 @@ public class UserDao {
 	}
 
 	// レコードの削除
-	public void DeleteUserInfo(String id) {
+	public void DeleteUserInfo(String loginId) {
 
 		// SQL実行
 		Connection conn = null;
@@ -225,7 +225,7 @@ public class UserDao {
 			conn = DBManager.getConnection();
 			String sql = "DELETE FROM user WHERE login_id = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setString(1, id);
+			pStmt.setString(1, loginId);
 			pStmt.executeUpdate();
 
 		} catch (SQLException e) {
@@ -240,4 +240,64 @@ public class UserDao {
 			}
 		}
 	}
+
+	// ユーザ情報更新（パスワードの更新あり）
+	public void UpdateUserInfo(String loginId, String userName, String birthDate, String password) throws NoSuchAlgorithmException {
+
+		// パスワード暗号化
+		String source = "password";
+		Charset charset = StandardCharsets.UTF_8;
+		String algorithm = "MD5";
+		byte[] bytes = MessageDigest.getInstance(algorithm).digest(source.getBytes(charset));
+		String encryptedPassword = DatatypeConverter.printHexBinary(bytes);
+
+		Connection conn = null;
+		try {
+			conn = DBManager.getConnection();
+			String sql = "UPDATE user SET name = ?, password = ?, birth_date = ? WHERE login_id = ?";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, userName);
+			pStmt.setString(2, encryptedPassword);
+			pStmt.setString(3, birthDate);
+			pStmt.setString(4, loginId);
+			pStmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	// ユーザ情報更新（パスワードの更新なし）
+		public void UpdateNonPasswordUserInfo(String loginId, String userName, String birthDate) throws NoSuchAlgorithmException {
+
+			Connection conn = null;
+			try {
+				conn = DBManager.getConnection();
+				String sql = "UPDATE user SET name = ?, birth_date = ? WHERE login_id = ?";
+				PreparedStatement pStmt = conn.prepareStatement(sql);
+				pStmt.setString(1, userName);
+				pStmt.setString(2, birthDate);
+				pStmt.setString(3, loginId);
+				pStmt.executeUpdate();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				if(conn != null) {
+					try {
+						conn.close();
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 }
