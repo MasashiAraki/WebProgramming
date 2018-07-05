@@ -10,7 +10,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-dark bg-dark mb-3">
-		<a class="text-white">${userInfo.name }さん</a>
+		<a class="text-white">${LoginUserInfo.name }さん</a>
 		<a href="LogoutServlet" class="text-danger font-weight-bold">ログアウト</a>
 
 	</nav>
@@ -24,7 +24,7 @@
 				<label for="loginId"
 					class="col-sm-2 col-form-label font-weight-bold">ログインID</label>
 				<div class="col-sm-10">
-					<p class="form-control-plaintext">${userInfoMap.loginId }</p>
+					<p class="form-control-plaintext">${userInfoRecord.loginId }</p>
 				</div>
 			</div>
 
@@ -32,7 +32,7 @@
 				<label for="password"
 					class="col-sm-2 col-form-label font-weight-bold">パスワード</label>
 				<div class="col-sm-10">
-					<input type="password" name="password" id="password" class="form-control">
+					<input type="password" name="password" class="form-control">
 				</div>
 			</div>
 
@@ -45,10 +45,10 @@
 			</div>
 
 			<div class="form-group row">
-				<label for="userName"
+				<label for="name"
 					class="col-sm-2 col-form-label font-weight-bold">ユーザ名</label>
 				<div class="col-sm-10">
-					<input type="text" name="userName" value="${userInfoMap.userName }" class="form-control">
+					<input type="text" name="name" value="${userInfoRecord.name }" class="form-control">
 				</div>
 			</div>
 
@@ -56,14 +56,14 @@
 				<label for="birthdate"
 					class="col-sm-2 col-form-label font-weight-bold">生年月日</label>
 				<div class="col-sm-10">
-					<input type="date" name="birthDate" value="${userInfoMap.birthDate }"
+					<input type="date" name="birthDate" value="${userInfoRecord.birthDate }"
 						class="form-control">
 				</div>
 			</div>
 
 
 		<div class="text-center">
-				<input type="hidden" name="loginId" value="${userInfoMap.loginId }">
+				<input type="hidden" name="loginId" value="${userInfoRecord.loginId }">
 				<button type="submit" class="btn btn-primary">更新</button>
 			<a class="btn btn-secondary" href="UserListServlet" role="button">戻る</a>
 		</div>

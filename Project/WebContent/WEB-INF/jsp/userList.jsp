@@ -11,7 +11,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-dark bg-dark mb-3">
-		<a class="text-white">${userInfo.name}さん</a>
+		<a class="text-white">${LoginUserInfo.name}さん</a>
 		<a href="LogoutServlet" class="text-danger font-weight-bold">ログアウト</a>
 
 	</nav>
@@ -35,10 +35,10 @@
 			</div>
 
 			<div class="form-group row">
-				<label for="userName"
+				<label for="name"
 					class="col-sm-2 col-form-label font-weight-bold">ユーザ名</label>
 				<div class="col-sm-10">
-					<input type="text" id="userName" class="form-control">
+					<input type="text" id="name" class="form-control">
 				</div>
 			</div>
 

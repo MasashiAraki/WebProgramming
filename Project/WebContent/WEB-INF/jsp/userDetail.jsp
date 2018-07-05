@@ -10,7 +10,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-dark bg-dark mb-3">
-		<a class="text-white">${userInfo.name}さん</a>
+		<a class="text-white">${LoginUserInfo.name}さん</a>
 		<a href="LogoutServlet" class="text-danger font-weight-bold">ログアウト</a>
 
 	</nav>
@@ -23,15 +23,15 @@
 				<label for="loginId"
 					class="col-sm-2 col-form-label font-weight-bold">ログインID</label>
 				<div class="col-sm-10">
-					<p class="form-control-plaintext">${userInfoMap.loginId }</p>
+					<p class="form-control-plaintext">${userInfoRecord.loginId }</p>
 				</div>
 			</div>
 
 			<div class="form-group row">
-				<label for="userName"
+				<label for="name"
 					class="col-sm-2 col-form-label font-weight-bold">ユーザ名</label>
 				<div class="col-sm-10">
-					<p class="form-control-plaintext">${userInfoMap.name }</p>
+					<p class="form-control-plaintext">${userInfoRecord.name }</p>
 				</div>
 			</div>
 
@@ -39,7 +39,7 @@
 				<label for="birthdate"
 					class="col-sm-2 col-form-label font-weight-bold">生年月日</label>
 				<div class="col-sm-10">
-					<p class="form-control-plaintext">${userInfoMap.birthDate }</p>
+					<p class="form-control-plaintext">${userInfoRecord.birthDate }</p>
 				</div>
 			</div>
 
@@ -47,7 +47,7 @@
 				<label for="createDate"
 					class="col-sm-2 col-form-label font-weight-bold">登録日時</label>
 				<div class="col-sm-10">
-					<p class="form-control-plaintext">${userInfoMap.createDate }</p>
+					<p class="form-control-plaintext">${userInfoRecord.createDate }</p>
 				</div>
 			</div>
 
@@ -55,7 +55,7 @@
 				<label for="updateDate"
 					class="col-sm-2 col-form-label font-weight-bold">更新日時</label>
 				<div class="col-sm-10">
-					<p class="form-control-plaintext">${userInfoMap.updateDate }</p>
+					<p class="form-control-plaintext">${userInfoRecord.updateDate }</p>
 				</div>
 			</div>
 		</form>

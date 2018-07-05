@@ -10,7 +10,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-dark bg-dark mb-3">
-		<a class="text-white">${userInfo.name}さん</a>
+		<a class="text-white">${LoginUserInfo.name}さん</a>
 		<a href="LogoutServlet" class="text-danger font-weight-bold">ログアウト</a>
 
 	</nav>
@@ -19,13 +19,13 @@
 		<p class="h1 mb-5 font-weight-bold text-center">ユーザ削除確認</p>
 
 		<div class="text-center">
-			<p>ログインID：${user.loginId}</p>
+			<p>ログインID：${userInfoRecord.loginId}</p>
 			<p>を本当に削除してよろしいでしょうか。</p>
 
 		</div>
 
 		<form method="post" action="UserDeleteServlet">
-			<input type="hidden" name="loginId" value="${user.loginId }">
+			<input type="hidden" name="loginId" value="${userInfoRecord.loginId }">
 			<div class="text-center">
 				<button type="submit" class="btn btn-primary">削除</button>
 				<a class="btn btn-secondary" href="UserListServlet" role="button">戻る</a>
