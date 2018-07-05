@@ -36,7 +36,7 @@ public class UserListServlet extends HttpServlet {
 
 		// ログインセッションがない場合、ログイン画面にリダイレクト
 		HttpSession session = request.getSession();
-		if (session.getAttribute("userInfo") == null) {
+		if (session.getAttribute("LoginUserInfo") == null) {
 			response.sendRedirect("LoginServlet");
 			// リダイレクトで処理を終わらせるためにreturnが必要
 			return;

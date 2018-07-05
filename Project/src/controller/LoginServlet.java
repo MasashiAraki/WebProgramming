@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
 
 		// ログインセッションがない場合、ログイン画面にリダイレクト
     	HttpSession session = request.getSession();
-    	if (session.getAttribute("userInfo") == null) {
+    	if (session.getAttribute("LoginUserInfo") == null) {
     		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/index.jsp");
 			dispatcher.forward(request, response);
 			return;
@@ -69,7 +69,7 @@ public class LoginServlet extends HttpServlet {
 
 		// テーブルに該当のデータが見つかった場合
 		HttpSession session = request.getSession();
-		session.setAttribute("userInfo", user);
+		session.setAttribute("LoginUserInfo", user);
 
 		// ユーザ一覧のサーブレットにリダイレクト
 		response.sendRedirect("UserListServlet");

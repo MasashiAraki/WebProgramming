@@ -66,7 +66,7 @@ public class UserDao {
 	}
 
 	/**
-	 * 全てのユーザ情報を取得
+	 * Userテーブルの全てのユーザ情報を取得
 	 */
 	public List<User> findAll() {
 		Connection conn = null;
@@ -140,26 +140,26 @@ public class UserDao {
 	}
 
 
-	// 指定したidのユーザ情報の1行レコードを取得
-	public User findByUserInfo(String id) {
+	// 指定したidの1行レコードを取得
+	public User findByUserInfo(String getId) {
 		Connection conn = null;
 		try {
 			// DBに接続してSQL文を実行
 			conn = DBManager.getConnection();
 			String sql = "SELECT * FROM user WHERE id = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setString(1, id);
+			pStmt.setString(1, getId);
 			ResultSet rs = pStmt.executeQuery();
 
-
 			if (rs.next()) {
+				int id = rs.getInt("id");
 				String loginId = rs.getString("login_id");
 				String name = rs.getString("name");
 				String birthDate = rs.getString("birth_date");
 				String password = rs.getString("password");
 				String createDate = rs.getString("create_date");
 				String updateDate = rs.getString("update_date");
-				return new User(loginId, name, birthDate, password, createDate, updateDate);
+				return new User(id, loginId, name, birthDate, password, createDate, updateDate);
 			}
 
 		} catch (SQLException e) {
@@ -179,7 +179,7 @@ public class UserDao {
 	}
 
 	// ユーザ新規登録
-	public void InsertUserInfo(String loginId, String userName, String birthDate, String password) throws NoSuchAlgorithmException {
+	public void InsertUserInfo(String loginId, String name, String birthDate, String password) throws NoSuchAlgorithmException {
 
 		// パスワード暗号化
 		String source = "password";
@@ -197,7 +197,7 @@ public class UserDao {
 			String sql = "INSERT INTO user(login_id, name, birth_date, password, create_date, update_date) VALUES(?, ?, ?, ?, now(), now());";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, loginId);
-			pStmt.setString(2, userName);
+			pStmt.setString(2, name);
 			pStmt.setString(3, birthDate);
 			pStmt.setString(4, encryptedPassword);
 
@@ -242,7 +242,7 @@ public class UserDao {
 	}
 
 	// ユーザ情報更新（パスワードの更新あり）
-	public void UpdateUserInfo(String loginId, String userName, String birthDate, String password) throws NoSuchAlgorithmException {
+	public void UpdateUserInfo(String loginId, String password, String name, String birthDate) throws NoSuchAlgorithmException {
 
 		// パスワード暗号化
 		String source = "password";
@@ -254,9 +254,9 @@ public class UserDao {
 		Connection conn = null;
 		try {
 			conn = DBManager.getConnection();
-			String sql = "UPDATE user SET name = ?, password = ?, birth_date = ? WHERE login_id = ?";
+			String sql = "UPDATE user SET name = ?, password = ?, birth_date = ?, update_date = now() WHERE login_id = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setString(1, userName);
+			pStmt.setString(1, name);
 			pStmt.setString(2, encryptedPassword);
 			pStmt.setString(3, birthDate);
 			pStmt.setString(4, loginId);
@@ -276,14 +276,14 @@ public class UserDao {
 	}
 
 	// ユーザ情報更新（パスワードの更新なし）
-		public void UpdateNonPasswordUserInfo(String loginId, String userName, String birthDate) throws NoSuchAlgorithmException {
+		public void UpdateNonPasswordUserInfo(String loginId, String name, String birthDate) throws NoSuchAlgorithmException {
 
 			Connection conn = null;
 			try {
 				conn = DBManager.getConnection();
-				String sql = "UPDATE user SET name = ?, birth_date = ? WHERE login_id = ?";
+				String sql = "UPDATE user SET name = ?, birth_date = ?, update_date = now() WHERE login_id = ?";
 				PreparedStatement pStmt = conn.prepareStatement(sql);
-				pStmt.setString(1, userName);
+				pStmt.setString(1, name);
 				pStmt.setString(2, birthDate);
 				pStmt.setString(3, loginId);
 				pStmt.executeUpdate();

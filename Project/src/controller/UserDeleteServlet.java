@@ -32,19 +32,21 @@ public class UserDeleteServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// ログインセッションがない場合、ログイン画面にリダイレクト
     	HttpSession session = request.getSession();
-    	if (session.getAttribute("userInfo") == null) {
+    	if (session.getAttribute("LoginUserInfo") == null) {
     		response.sendRedirect("LoginServlet");
     		return;
     	}
 
+    	// 取得したリクエストパラメータを引数としてDaoを実行
     	request.setCharacterEncoding("UTF-8");
-    	String loginId = request.getParameter("loginId");
+    	String id = request.getParameter("id");
 
     	UserDao userDao = new UserDao();
-		User user = userDao.findByUserInfo(loginId);
-    	request.setAttribute("user", user);
+    	User userInfoRecord = userDao.findByUserInfo(id);
 
+    	request.setAttribute("userInfoRecord", userInfoRecord);
     	RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userDelete.jsp");
 		dispatcher.forward(request, response);
 	}

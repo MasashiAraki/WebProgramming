@@ -2,8 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,7 +36,7 @@ public class UserCreateServlet extends HttpServlet {
 
     	// ログインセッションがない場合、ログイン画面にリダイレクト
     	HttpSession session = request.getSession();
-    	if (session.getAttribute("userInfo") == null) {
+    	if (session.getAttribute("LoginUserInfo") == null) {
     		response.sendRedirect("LoginServlet");
     		return;
     	}
@@ -58,27 +56,24 @@ public class UserCreateServlet extends HttpServlet {
 		String loginId = request.getParameter("loginId");
 		String password = request.getParameter("password");
 		String passwordConfirm = request.getParameter("passwordConfirm");
-		String userName = request.getParameter("userName");
+		String name = request.getParameter("name");
 		String birthDate = request.getParameter("birthDate");
 
-		// 登録エラー時に使う
-		Map<String, String> inputParameterMap = new HashMap<>();
-		inputParameterMap.put("loginId", loginId);
-		inputParameterMap.put("userName", userName);
-		inputParameterMap.put("birthDate", birthDate);
+		// UserのBeansに保存
+		User inputUserInfo = new User(loginId, name, birthDate);
 
 		// 入力項目に未入力がある場合
 		if (loginId.equals("") || password.equals("") ||
-				passwordConfirm.equals("") || userName.equals("") || birthDate.equals("")) {
+				passwordConfirm.equals("") || name.equals("") || birthDate.equals("")) {
 			request.setAttribute("errorMessage", "全て入力してください");
-			errorAction(request, response, inputParameterMap);
+			errorAction(request, response, inputUserInfo);
 			return;
 		}
 
 		// パスワードとパスワード確認の入力内容が異なる場合
 		if (!password.equals(passwordConfirm)) {
 			request.setAttribute("errorMessage", "パスワードが異なります");
-			errorAction(request, response, inputParameterMap);
+			errorAction(request, response, inputUserInfo);
 			return;
 		}
 
@@ -87,35 +82,33 @@ public class UserCreateServlet extends HttpServlet {
 		User user = userDao.findByLoginId(loginId);
 		if (user != null) {
 			request.setAttribute("errorMessage", "既にログインIDが存在します");
-			errorAction(request, response, inputParameterMap);
+			errorAction(request, response, inputUserInfo);
 			return;
 		}
 
 		// 新規登録処理
 		try {
-			userDao.InsertUserInfo(loginId, userName, birthDate, password);
+			userDao.InsertUserInfo(loginId, name, birthDate, password);
 			response.sendRedirect("UserListServlet");
 		} catch (NoSuchAlgorithmException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-
 	}
 
-
 	/**
-	 * エラーが発生した際の処理
 	 * @param request
 	 * @param response
-	 * @param inputParameterMap
+	 * @param inputUserInfo
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	private void errorAction(HttpServletRequest request, HttpServletResponse response,
-			Map<String, String> inputParameterMap) throws ServletException, IOException {
-		request.setAttribute("inputParameter", inputParameterMap);
+	private void errorAction(HttpServletRequest request, HttpServletResponse response, User inputUserInfo)
+			throws ServletException, IOException {
+		request.setAttribute("inputUserInfo", inputUserInfo);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userCreate.jsp");
 		dispatcher.forward(request, response);
 	}
+
 
 }

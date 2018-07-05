@@ -1,8 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,7 +34,7 @@ public class UserDetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	// ログインセッションがない場合、ログイン画面にリダイレクト
     	HttpSession session = request.getSession();
-    	if (session.getAttribute("userInfo") == null) {
+    	if (session.getAttribute("LoginUserInfo") == null) {
     		response.sendRedirect("LoginServlet");
     		return;
     	}
@@ -44,22 +42,13 @@ public class UserDetailServlet extends HttpServlet {
     	// 取得したリクエストパラメータを引数としてDaoを実行
     	request.setCharacterEncoding("UTF-8");
     	String id = request.getParameter("id");
+
     	UserDao userDao = new UserDao();
-    	User userInfo = userDao.findByUserInfo(id);
+    	User userInfoRecord = userDao.findByUserInfo(id);
 
-    	// Dapの結果をMapに入れてフォワード
-    	Map<String, String> userInfoMap = new HashMap<>();
-    	userInfoMap.put("loginId", userInfo.getLoginId());
-    	userInfoMap.put("name", userInfo.getName());
-    	userInfoMap.put("birthDate", userInfo.getBirthDate());
-    	userInfoMap.put("createDate", userInfo.getCreateDate());
-    	userInfoMap.put("updateDate", userInfo.getUpdateDate());
-
-    	request.setAttribute("userInfoMap", userInfoMap);
+    	request.setAttribute("userInfoRecord", userInfoRecord);
     	RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/jsp/userDetail.jsp");
 		dispatcher.forward(request, response);
-
-
     }
 
 	/**

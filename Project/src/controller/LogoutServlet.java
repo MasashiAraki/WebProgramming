@@ -30,7 +30,7 @@ public class LogoutServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// セッションのユーザ情報を削除して、ログイン画面にリダイレクト
 		HttpSession session = request.getSession();
-		session.removeAttribute("userInfo");
+		session.removeAttribute("LoginUserInfo");
 		response.sendRedirect("LoginServlet");
 	}
 
