@@ -25,7 +25,7 @@ import model.User;
 public class UserDao {
 
 	/**
-	 * ログインIDとパスワードに該当するユーザ情報を取得
+	 * ログインセッション
 	 * @param loginId
 	 * @param password
 	 * @return
@@ -74,7 +74,7 @@ public class UserDao {
 
 		try {
 			conn = DBManager.getConnection();
-			String sql = "SELECT * FROM user";
+			String sql = "SELECT * FROM user where login_id not in ('admin')";
 
 			Statement stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery(sql);
@@ -105,6 +105,65 @@ public class UserDao {
 		}
 		return userList;
 	}
+
+	// ユーザ情報の検索
+	public List<User> findSearch(String loginId, String name, String MinBirthDate, String MaxBirthDate) {
+		Connection conn = null;
+		List<User> userList = new ArrayList<User>();
+
+		try {
+			conn = DBManager.getConnection();
+			String sql = "SELECT * FROM user where login_id not in ('admin')";
+
+			if(!loginId.equals("")) {
+				sql += " AND login_id = '" + loginId + "'";
+			}
+
+			if(!name.equals("")) {
+				sql += " AND name = '" + name + "'";
+			}
+
+			if (!MinBirthDate.equals("")) {
+				sql += " AND birth_date >= '" + MinBirthDate + "'";
+			}
+
+			if (!MaxBirthDate.equals("")) {
+				sql += " AND birth_date <= '" + MaxBirthDate + "'";
+			}
+
+			System.out.println(sql);
+
+
+			Statement stat = conn.createStatement();
+			ResultSet rs = stat.executeQuery(sql);
+
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String getLoginId = rs.getString("login_id");
+				String getName = rs.getString("name");
+				String birthDate = rs.getString("birth_date");
+				String password = rs.getString("password");
+				String createDate = rs.getString("create_date");
+				String updateDate = rs.getString("update_date");
+				User user = new User(id, getLoginId, getName, birthDate, password, createDate, updateDate);
+				userList.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return userList;
+	}
+
 
 	// ログインIDの取得
 	public User findByLoginId(String loginId) {
@@ -141,25 +200,25 @@ public class UserDao {
 
 
 	// 指定したidの1行レコードを取得
-	public User findByUserInfo(String getId) {
+	public User findByUserInfo(String id) {
 		Connection conn = null;
 		try {
 			// DBに接続してSQL文を実行
 			conn = DBManager.getConnection();
 			String sql = "SELECT * FROM user WHERE id = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
-			pStmt.setString(1, getId);
+			pStmt.setString(1, id);
 			ResultSet rs = pStmt.executeQuery();
 
 			if (rs.next()) {
-				int id = rs.getInt("id");
+				int getId = rs.getInt("id");
 				String loginId = rs.getString("login_id");
 				String name = rs.getString("name");
 				String birthDate = rs.getString("birth_date");
 				String password = rs.getString("password");
 				String createDate = rs.getString("create_date");
 				String updateDate = rs.getString("update_date");
-				return new User(id, loginId, name, birthDate, password, createDate, updateDate);
+				return new User(getId, loginId, name, birthDate, password, createDate, updateDate);
 			}
 
 		} catch (SQLException e) {
