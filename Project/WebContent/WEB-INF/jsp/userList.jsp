@@ -25,20 +25,19 @@
 			</form>
 		</div>
 
-		<form>
+		<form method="post" action="UserListServlet">
 			<div class="form-group row">
 				<label for="loginId"
 					class="col-sm-2 col-form-label font-weight-bold">ログインID</label>
 				<div class="col-sm-10">
-					<input type="text" id="loginId" class="form-control">
+					<input type="text" name="inputLoginId" class="form-control">
 				</div>
 			</div>
 
 			<div class="form-group row">
-				<label for="name"
-					class="col-sm-2 col-form-label font-weight-bold">ユーザ名</label>
+				<label for="name" class="col-sm-2 col-form-label font-weight-bold">ユーザ名</label>
 				<div class="col-sm-10">
-					<input type="text" id="name" class="form-control">
+					<input type="text" name="inputName" class="form-control">
 				</div>
 			</div>
 
@@ -47,29 +46,25 @@
 					class="col-sm-2 col-form-label font-weight-bold">生年月日</label>
 				<div class="row col-sm-10">
 					<div class="col-sm-5">
-						<input type="date" id="birthdate" class="form-control">
+						<input type="date" name="inputMinBirthdate" class="form-control">
 					</div>
 
-					<div class="col-sm-2 text-center form-control-plaintext">
-						～
-					</div>
+					<div class="col-sm-2 text-center form-control-plaintext">～</div>
 
 					<div class="col-sm-5">
-						<input type="date" id="birthdate" class="form-control">
+						<input type="date" name="inputMaxBirthdate" class="form-control">
 					</div>
 
 				</div>
 			</div>
+			<div class="text-right">
+				<button type="submit" class="btn btn-primary btn-lg">検索</button>
+			</div>
 		</form>
-
-		<div class="text-right">
-			<button type="button" class="btn btn-primary btn-lg">検索</button>
-		</div>
 
 		<hr>
 
 		<table class="table table-striped ">
-
 			<thead class="thead-dark">
 				<tr>
 					<th scope="col">ログインID</th>
@@ -94,8 +89,8 @@
 					</tr>
 				</c:forEach>
 			</tbody>
-
 		</table>
+
 	</div>
 </body>
 </html>
