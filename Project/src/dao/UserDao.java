@@ -182,7 +182,7 @@ public class UserDao {
 	public void InsertUserInfo(String loginId, String name, String birthDate, String password) throws NoSuchAlgorithmException {
 
 		// パスワード暗号化
-		String source = "password";
+		String source = password;
 		Charset charset = StandardCharsets.UTF_8;
 		String algorithm = "MD5";
 
@@ -245,7 +245,7 @@ public class UserDao {
 	public void UpdateUserInfo(String loginId, String password, String name, String birthDate) throws NoSuchAlgorithmException {
 
 		// パスワード暗号化
-		String source = "password";
+		String source = password;
 		Charset charset = StandardCharsets.UTF_8;
 		String algorithm = "MD5";
 		byte[] bytes = MessageDigest.getInstance(algorithm).digest(source.getBytes(charset));
