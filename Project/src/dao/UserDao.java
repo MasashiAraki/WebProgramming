@@ -29,8 +29,18 @@ public class UserDao {
 	 * @param loginId
 	 * @param password
 	 * @return
+	 * @throws NoSuchAlgorithmException
 	 */
-	public User findByLoginInfo(String loginId, String password) {
+	public User findByLoginInfo(String loginId, String password) throws NoSuchAlgorithmException {
+
+		// パスワード暗号化
+				String source = password;
+				Charset charset = StandardCharsets.UTF_8;
+				String algorithm = "MD5";
+
+				byte[] bytes = MessageDigest.getInstance(algorithm).digest(source.getBytes(charset));
+				String encryptedPassword = DatatypeConverter.printHexBinary(bytes);
+
 		Connection conn = null;
 		try {
 			// DBに接続してSQL文を実行
@@ -38,7 +48,7 @@ public class UserDao {
 			String sql = "SELECT * FROM user WHERE login_id = ? and password = ?";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, loginId);
-			pStmt.setString(2, password);
+			pStmt.setString(2, encryptedPassword);
 			ResultSet rs = pStmt.executeQuery();
 
 			// 検索結果は1件あるかないかなので、while文ではなくif文を使っている。
@@ -120,7 +130,7 @@ public class UserDao {
 			}
 
 			if(!name.equals("")) {
-				sql += " AND name = '" + name + "'";
+				sql += " AND name LIKE '%" + name + "%'";
 			}
 
 			if (!MinBirthDate.equals("")) {
@@ -130,9 +140,6 @@ public class UserDao {
 			if (!MaxBirthDate.equals("")) {
 				sql += " AND birth_date <= '" + MaxBirthDate + "'";
 			}
-
-			System.out.println(sql);
-
 
 			Statement stat = conn.createStatement();
 			ResultSet rs = stat.executeQuery(sql);
