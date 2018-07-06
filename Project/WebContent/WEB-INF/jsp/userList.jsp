@@ -79,12 +79,16 @@
 					<tr>
 						<td>${user.loginId}</td>
 						<td>${user.name}</td>
-                     	<td>${user.birthDate}</td>
+						<td>${user.birthDate}</td>
 
 						<td>
 							<a class="btn btn-primary" href="UserDetailServlet?id=${user.id}" role="button">詳細</a>
-							<a class="btn btn-success" href="UserUpdateServlet?id=${user.id}" role="button">更新</a>
-							<a class="btn btn-danger" href="UserDeleteServlet?id=${user.id}" role="button">削除</a>
+
+							<c:if test="${LoginUserInfo.loginId == 'admin' || LoginUserInfo.loginId == user.loginId}">
+								<a class="btn btn-success" href="UserUpdateServlet?id=${user.id}"role="button">更新</a></c:if>
+
+							<c:if test="${LoginUserInfo.loginId == 'admin' }">
+								<a class="btn btn-danger"	href="UserDeleteServlet?id=${user.id}" role="button">削除</a></c:if>
 						</td>
 					</tr>
 				</c:forEach>
