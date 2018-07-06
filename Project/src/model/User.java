@@ -1,11 +1,13 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * UserテーブルのBeans
  * @author 31510007-PC
  *
  */
-public class User {
+public class User implements Serializable {
 	private int id;
 	private String loginId;
 	private String name;
@@ -14,33 +16,27 @@ public class User {
 	private String createDate;
 	private String updateDate;
 
-	// ログインセッションを保存
+	public User (String loginId) {
+		this.loginId = loginId;
+	}
+
 	public User (String loginId, String name) {
 		this.loginId = loginId;
 		this.name = name;
 	}
 
-	// 全てのユーザ情報を保存
+	public User (String loginId, String name, String birthDate) {
+		this.loginId = loginId;
+		this.name = name;
+		this.birthDate = birthDate;
+	}
+
 	public User (int id, String loginId, String name, String birthDate, String password, String createDate, String updateDate) {
 		this.id = id;
 		this.loginId = loginId;
 		this.name = name;
 		this.birthDate = birthDate;
 		this.password = password;
-		this.createDate = createDate;
-		this.updateDate = updateDate;
-	}
-
-	// ログインID比較用
-	public User (String loginId) {
-		this.loginId = loginId;
-	}
-
-	// 指定したidのユーザ情報の1行レコードを保存
-	public User (String loginId, String name, String birthDate, String password, String createDate, String updateDate) {
-		this.loginId = loginId;
-		this.name = name;
-		this.birthDate = birthDate;
 		this.createDate = createDate;
 		this.updateDate = updateDate;
 	}
